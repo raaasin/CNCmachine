@@ -133,4 +133,15 @@
             });
         });
     });
+
+    // when submit button clicked, disable submit and show spinner to indicate that the form is being submitted
+    document.addEventListener('DOMContentLoaded', function () {
+        var submitButton = document.querySelector('button[type="submit"]');
+        submitButton.addEventListener('click', function () {
+            //submit the form
+            submitButton.closest('form').submit();
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Thinking...';
+        });
+    });
 </script>
