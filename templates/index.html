@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNC Selection Guide</title>
+</head>
+<body>
+
+    <h1>CNC Selection Guide</h1>
+
+    <form method="post" action="{{ url_for('index') }}">
+        <div id="page1" {% if cnc_name %}style="display: none;"{% endif %}>
+            <label for="cnc_name">Name of the CNCs where you plan to use it?</label>
+            <input type="text" name="cnc_name" value="{{ cnc_name }}" required>
+            <button type="button" onclick="showPage('page2')">Next</button>
+        </div>
+
+        <div id="page2" {% if not cnc_name %}style="display: none;"{% endif %}>
+            <label for="material">What is the main material for the operation?</label>
+            <input type="text" name="material" value="{{ material }}" required>
+            <button type="button" onclick="showPage('page3')">Next</button>
+        </div>
+
+        <div id="page3" {% if not material %}style="display: none;"{% endif %}>
+            <label for="operation">What kind of operation do you want to use it for?</label>
+            <input type="text" name="operation" value="{{ operation }}" required>
+            <button type="button" onclick="showPage('page4')">Next</button>
+        </div>
+
+        <div id="page4" {% if not operation %}style="display: none;"{% endif %}>
+            <label for="additional_criteria">Any additional criteria that are important to you?</label>
+            <input type="text" name="additional_criteria" value="{{ additional_criteria }}" required>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            var pages = document.querySelectorAll('[id^="page"]');
+            pages.forEach(function (page) {
+                page.style.display = 'none';
+            });
+
+            // Show the selected page
+            document.getElementById(pageId).style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
