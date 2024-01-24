@@ -30,15 +30,13 @@
     <div class="container">
         <h1>Recommendation</h1>
         
-        <p>Based on your input, here's a potential recommendation:</p>
+        <p>Based on your input, here's a potential recommendation: 👀</p>
         {% for chunk in answer %}
             <p class="lead">{{ chunk.text }}</p>
         {% endfor %}
 
-        <p><strong>Important considerations:</strong></p>
-        {% set message1 = "provide very basic information about in short for without formatting + answer.text" %}
-        {% set answer1 = get_message(message1) %}
-        {% for chunk in answer1 %}
+        <p><strong>Description: 🧾</strong></p>
+        {% for chunk in about %}
             <p class="lead">{{ chunk.text }}</p>
         {% endfor %}
 

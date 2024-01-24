@@ -74,7 +74,7 @@
                     Let's start! do you know specific name of the CNC's where you plan to use the tool?
                     Write them here (if any)👇
                      </label>
-                <input type="text" class="form-control" name="cnc_name" value="{{ cnc_name }}" required>
+                <input type="text" class="form-control" name="cnc_name" value="{{ cnc_name }}" required data-next-page="page2">
                 <button type="button" class="btn btn-next" onclick="showPage('page2')">Next</button>
             </div>
 
@@ -84,11 +84,11 @@
                     Milling, Drilling ...  You know better 😉
                 
                 </label>
-                <input type="text" class="form-control" name="material" value="{{ material }}" required>
+                <input type="text" class="form-control" name="material" value="{{ material }}" required data-next-page="page3">
                 <button type="button" class="btn btn-next" onclick="showPage('page3')">Next</button>
             </div>
 
-            <div class="form-group" id="page4" {% if not operation %}style="display: none;"{% endif %}>
+            <div class="form-group" id="page3" {% if not operation %}style="display: none;"{% endif %}>
                 <label for="additional_criteria">You are doing great!🎖️<br><br>
                     The last question and we are done (I'm almost promise) <br><br>
                     Could you specify any additional criteria that is important for you: 
@@ -100,22 +100,37 @@
         </form>
     </div>
 
-    <!-- Include Bootstrap JavaScript (optional, for some features) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Include Bootstrap JavaScript (optional, for some features) -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script>
-        function showPage(pageId) {
-            // Hide all pages
-            var pages = document.querySelectorAll('[id^="page"]');
-            pages.forEach(function (page) {
-                page.style.display = 'none';
+<script>
+    function showPage(pageId) {
+        // Hide all pages
+        var pages = document.querySelectorAll('[id^="page"]');
+        pages.forEach(function (page) {
+            page.style.display = 'none';
+        });
+
+        // Show the selected page
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    // Add event listeners for input fields to trigger "Next" button click on Enter key press
+    document.addEventListener('DOMContentLoaded', function () {
+        var inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(function (input) {
+            input.addEventListener('keyup', function (event) {
+                if (event.key === 'Enter') {
+                    var nextPageId = input.getAttribute('data-next-page');
+                    if (nextPageId) {
+                        showPage(nextPageId);
+                    } else {
+                        // If there is no next page, submit the form
+                        input.closest('form').submit();
+                    }
+                }
             });
-
-            // Show the selected page
-            document.getElementById(pageId).style.display = 'block';
-        }
-    </script>
-
-</body>
-</html>
+        });
+    });
+</script>

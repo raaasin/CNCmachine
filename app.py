@@ -18,16 +18,16 @@ def index():
         # Retrieve form data
         cnc_name = request.form['cnc_name']
         material = request.form['material']
-        operation = request.form['operation']
         additional_criteria = request.form['additional_criteria']
 
         # Build the message for the API call
-        message = f"i want to use it at {cnc_name} for this operation ${operation}, with additional criteria ${additional_criteria} just provide the name of one single cnc thats it nothing else"
-        
-        # Make the API call
+        message = f"i want to use it at {cnc_name} for this operation ${material}, with additional criteria ${additional_criteria} just provide the name of one single cnc thats it nothing else"
         answer = get_message(message)
 
-        return render_template('result.html', answer=answer, get_message=get_message)
+        newmess=f"Describe about The CNC machine '{answer}' in a few short lines"
+        about=newmess
+
+        return render_template('result.html', answer=answer, about=about)
 
     return render_template('index.html')
 
