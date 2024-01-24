@@ -22,7 +22,7 @@ def index():
         additional_criteria = request.form['additional_criteria']
 
         # Build the message for the API call
-        message = f"i want to use it at {cnc_name} for this Material: {material} for this operation ${operation}, with additional criteria ${additional_criteria} just provide the name of one single cnc thats it nothing else"
+        message = f"i want to use it at {cnc_name} for this operation ${operation}, with additional criteria ${additional_criteria} just provide the name of one single cnc thats it nothing else"
         
         # Make the API call
         answer = get_message(message)

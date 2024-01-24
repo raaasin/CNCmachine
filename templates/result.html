@@ -36,7 +36,7 @@
         {% endfor %}
 
         <p><strong>Important considerations:</strong></p>
-        {% set message1 = "provide very basic information about in short for + answer.text" %}
+        {% set message1 = "provide very basic information about in short for without formatting + answer.text" %}
         {% set answer1 = get_message(message1) %}
         {% for chunk in answer1 %}
             <p class="lead">{{ chunk.text }}</p>

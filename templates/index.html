@@ -37,16 +37,16 @@
         }
 
         .btn-next {
-            background-color: #e2e6ea; /* Light grayish color for Next button */
-            border-color: #e2e6ea; /* Match the button border color */
-            color: #495057; /* Darker text color for contrast */
+            background-color: #000000; /* Light grayish color for Next button */
+            border-color: #000000; /* Match the button border color */
+            color: #ffffff; /* Darker text color for contrast */
         }
 
         .btn-next:hover,
         .btn-next:focus {
             background-color: #cfd8dc; /* Slightly darker on hover/focus */
             border-color: #cfd8dc;
-            color: #495057;
+            color: #212122;
         }
 
         /* Darker background color for input text boxes */
@@ -56,37 +56,46 @@
 
         button{
             margin: 10px;
+            text-align: right;
+            padding: 200px;
+            width: 40%;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" style="text-align: center;">
         <h1>CNC Selection Guide</h1>
 
         <form method="post" action="{{ url_for('index') }}">
             <div class="form-group" id="page1" {% if cnc_name %}style="display: none;"{% endif %}>
-                <label for="cnc_name">Name of the CNCs and where you plan to use it?</label>
+                <label for="cnc_name">Hi!👋 I'm Automata CNC - your personal industrial Tools Co - pilot 🧑‍✈️ <br><br>
+                    I'm here to help you chose the best tools for your tailored needs. ⚒️ <br><br>
+                    Let's start! do you know specific name of the CNC's where you plan to use the tool?
+                    Write them here (if any)👇
+                     </label>
                 <input type="text" class="form-control" name="cnc_name" value="{{ cnc_name }}" required>
                 <button type="button" class="btn btn-next" onclick="showPage('page2')">Next</button>
             </div>
 
             <div class="form-group" id="page2" {% if not cnc_name %}style="display: none;"{% endif %}>
-                <label for="material">What is the main material for the operation?</label>
+                <label for="material">Great! Lets move forward 🚀<br><br>
+                    For which type of operation you plan to use tool for?⚙️<br><br>
+                    Milling, Drilling ...  You know better 😉
+                
+                </label>
                 <input type="text" class="form-control" name="material" value="{{ material }}" required>
                 <button type="button" class="btn btn-next" onclick="showPage('page3')">Next</button>
             </div>
 
-            <div class="form-group" id="page3" {% if not material %}style="display: none;"{% endif %}>
-                <label for="operation">What kind of operation do you want to use it for?</label>
-                <input type="text" class="form-control" name="operation" value="{{ operation }}" required>
-                <button type="button" class="btn btn-next" onclick="showPage('page4')">Next</button>
-            </div>
-
             <div class="form-group" id="page4" {% if not operation %}style="display: none;"{% endif %}>
-                <label for="additional_criteria">Any additional criteria that are important to you?</label>
-                <input type="text" class="form-control" name="additional_criteria" value="{{ additional_criteria }}" required>
-                <button type="submit" class="btn btn-custom">Submit</button>
+                <label for="additional_criteria">You are doing great!🎖️<br><br>
+                    The last question and we are done (I'm almost promise) <br><br>
+                    Could you specify any additional criteria that is important for you: 
+                    budget, timeline ... 🧑‍🔬
+                </label>
+                <input type="text" class="form-control" name="additional_criteria" value="{{ additional_criteria }}">
+                <button type="submit" class="btn btn-custom">✔</button>
             </div>
         </form>
     </div>
