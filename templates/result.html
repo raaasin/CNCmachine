@@ -21,30 +21,53 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
             padding: 20px;
             margin-top: 20px;
+            max-width: 400px; /* Set maximum width */
+            margin: auto; /* Center the container */
         }
+
+        
+        button{
+            margin: 10px;
+            text-align: right;
+            padding: 200px;
+            width: 40%;
+        }
+        
+        .btn-next {
+            background-color: #000000; /* Light grayish color for Next button */
+            border-color: #000000; /* Match the button border color */
+            color: #ffffff; /* Darker text color for contrast */
+        }
+
+        .btn-next:hover,
+        .btn-next:focus {
+            background-color: #cfd8dc; /* Slightly darker on hover/focus */
+            border-color: #cfd8dc;
+            color: #212122;
+        }
+
 
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" style="text-align: center;">
         <h1>Recommendation</h1>
         
         <p>Based on your input, here's a potential recommendation: 👀</p>
         {% for chunk in answer %}
-            <p class="lead">{{ chunk.text }}</p>
+            <p class="lead" style="font-weight: bold;">{{ chunk.text }}</p>
         {% endfor %}
 
         <p><strong>Description: 🧾</strong></p>
-        {% for chunk in about %}
-            <p class="lead">{{ chunk.text }}</p>
-        {% endfor %}
+            <p class="lead" style="font-size: 14px; font-weight: 700;">{{ about }}</p>
+                <button type="button" class="btn btn-next" onclick="location.reload()">Rethink</button>
+                <button type="button" class="btn btn-next" onclick="window.location.href = '/'">New</button>
+                <hr>
+            </div>
 
-        <hr>
-    </div>
-
-    <!-- Include Bootstrap JavaScript (optional, for some features) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</body>
-</html>
+            <!-- Include Bootstrap JavaScript (optional, for some features) -->
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        </body>
+        </html>

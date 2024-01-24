@@ -21,13 +21,19 @@ def index():
         additional_criteria = request.form['additional_criteria']
 
         # Build the message for the API call
-        message = f"i want to use it at {cnc_name} for this operation ${material}, with additional criteria ${additional_criteria} just provide the name of one single cnc thats it nothing else"
+        message = f"i want to use it at {cnc_name} for this operation ${material}, with additional criteria ${additional_criteria} just provide the name of one single cnc thats it nothing else, provide answer without formatting, just plain text."
         answer = get_message(message)
+        
+        newmess=f"Describe about The CNC machine '{answer.text}' in a few short lines wihout formatting just plain text"
+        about=get_message(newmess)
+        abt=""
+        for i in about.text:
+            if i=='\n':
+                abt+=" "
+            else:
+                abt+=i
 
-        newmess=f"Describe about The CNC machine '{answer}' in a few short lines"
-        about=newmess
-
-        return render_template('result.html', answer=answer, about=about)
+        return render_template('result.html', answer=answer, about=abt)
 
     return render_template('index.html')
 
