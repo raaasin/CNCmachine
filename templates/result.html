@@ -4,24 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CNC Selection Guide - Result</title>
+
+    <!-- Include Bootstrap CSS (Lumen theme) -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Additional custom styling */
+        body {
+            padding: 20px;
+            background-color: #f8f9fa; /* Light background color */
+        }
+
+        .container {
+            background-color: #ffffff; /* White container background */
+            border-radius: 8px; /* Rounded corners for container */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+    </style>
 </head>
 <body>
 
-    <h1>Recommendation</h1>
-    
-    <p>Based on your input, here's a potential recommendation:</p>
-    {% for chunk in answer %}
-        <p style='font-size:16px;'>{{ chunk.text }}</p>
-    {% endfor %}
+    <div class="container">
+        <h1>Recommendation</h1>
+        
+        <p>Based on your input, here's a potential recommendation:</p>
+        {% for chunk in answer %}
+            <p class="lead">{{ chunk.text }}</p>
+        {% endfor %}
 
-    <p>**Important considerations:</p>
-    {% set message1 = "provide very basic information about in short for + answer.text  %}
-    {% set answer1 = get_message(message1) %}
-    {% for chunk in answer1 %}
-        <p style='font-size:16px;'>{{ chunk.text }}</p>
-    {% endfor %}
+        <p><strong>Important considerations:</strong></p>
+        {% set message1 = "provide very basic information about in short for + answer.text" %}
+        {% set answer1 = get_message(message1) %}
+        {% for chunk in answer1 %}
+            <p class="lead">{{ chunk.text }}</p>
+        {% endfor %}
 
-    <hr>
+        <hr>
+    </div>
 
+    <!-- Include Bootstrap JavaScript (optional, for some features) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

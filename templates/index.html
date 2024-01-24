@@ -4,36 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CNC Selection Guide</title>
+
+    <!-- Include Bootstrap CSS (Lumen theme) -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Additional custom styling */
+        body {
+            padding: 20px;
+            background-color: #f8f9fa; /* Light background color */
+        }
+
+        .container {
+            background-color: #ffffff; /* White container background */
+            border-radius: 8px; /* Rounded corners for container */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+            padding: 20px;
+            margin-top: 20px;
+            max-width: 400px; /* Set maximum width */
+            margin: auto; /* Center the container */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Customized button color */
+        .btn-custom {
+            background-color: #28a745; /* Green color for Submit button */
+            border-color: #28a745; /* Match the button border color */
+            color: #ffffff; /* White text color for contrast */
+        }
+
+        .btn-next {
+            background-color: #e2e6ea; /* Light grayish color for Next button */
+            border-color: #e2e6ea; /* Match the button border color */
+            color: #495057; /* Darker text color for contrast */
+        }
+
+        .btn-next:hover,
+        .btn-next:focus {
+            background-color: #cfd8dc; /* Slightly darker on hover/focus */
+            border-color: #cfd8dc;
+            color: #495057;
+        }
+
+        /* Darker background color for input text boxes */
+        .form-control {
+            background-color: #e2e6ea; /* Darker than off-white */
+        }
+
+        button{
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>CNC Selection Guide</h1>
+    <div class="container">
+        <h1>CNC Selection Guide</h1>
 
-    <form method="post" action="{{ url_for('index') }}">
-        <div id="page1" {% if cnc_name %}style="display: none;"{% endif %}>
-            <label for="cnc_name">Name of the CNCs where you plan to use it?</label>
-            <input type="text" name="cnc_name" value="{{ cnc_name }}" required>
-            <button type="button" onclick="showPage('page2')">Next</button>
-        </div>
+        <form method="post" action="{{ url_for('index') }}">
+            <div class="form-group" id="page1" {% if cnc_name %}style="display: none;"{% endif %}>
+                <label for="cnc_name">Name of the CNCs and where you plan to use it?</label>
+                <input type="text" class="form-control" name="cnc_name" value="{{ cnc_name }}" required>
+                <button type="button" class="btn btn-next" onclick="showPage('page2')">Next</button>
+            </div>
 
-        <div id="page2" {% if not cnc_name %}style="display: none;"{% endif %}>
-            <label for="material">What is the main material for the operation?</label>
-            <input type="text" name="material" value="{{ material }}" required>
-            <button type="button" onclick="showPage('page3')">Next</button>
-        </div>
+            <div class="form-group" id="page2" {% if not cnc_name %}style="display: none;"{% endif %}>
+                <label for="material">What is the main material for the operation?</label>
+                <input type="text" class="form-control" name="material" value="{{ material }}" required>
+                <button type="button" class="btn btn-next" onclick="showPage('page3')">Next</button>
+            </div>
 
-        <div id="page3" {% if not material %}style="display: none;"{% endif %}>
-            <label for="operation">What kind of operation do you want to use it for?</label>
-            <input type="text" name="operation" value="{{ operation }}" required>
-            <button type="button" onclick="showPage('page4')">Next</button>
-        </div>
+            <div class="form-group" id="page3" {% if not material %}style="display: none;"{% endif %}>
+                <label for="operation">What kind of operation do you want to use it for?</label>
+                <input type="text" class="form-control" name="operation" value="{{ operation }}" required>
+                <button type="button" class="btn btn-next" onclick="showPage('page4')">Next</button>
+            </div>
 
-        <div id="page4" {% if not operation %}style="display: none;"{% endif %}>
-            <label for="additional_criteria">Any additional criteria that are important to you?</label>
-            <input type="text" name="additional_criteria" value="{{ additional_criteria }}" required>
-            <button type="submit">Submit</button>
-        </div>
-    </form>
+            <div class="form-group" id="page4" {% if not operation %}style="display: none;"{% endif %}>
+                <label for="additional_criteria">Any additional criteria that are important to you?</label>
+                <input type="text" class="form-control" name="additional_criteria" value="{{ additional_criteria }}" required>
+                <button type="submit" class="btn btn-custom">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JavaScript (optional, for some features) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script>
         function showPage(pageId) {
