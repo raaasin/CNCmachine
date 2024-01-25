@@ -39,6 +39,7 @@
             flex-direction: column;
             overflow-y: auto;
             scroll-behavior: smooth;
+            display: flex;
             
         }
 
@@ -47,22 +48,25 @@
             margin: 5px;
         }
 
-        .user-message {
+            .user-message {
             background-color: #d1ecf1; /* Light blue background for user messages */
             border-radius: 14px 14px 0 14px;
             text-align: right;
-            display: inline-block; /* Display as inline block */
-            max-width: 100%; /* Set maximum width to 80% */
-            word-wrap: break-word; /* Break long words to fit within the container */
+            display: block;
+            max-width: max-content;
+            word-wrap: break-word;
+            margin: 5px 0;
+            align-self: flex-end;
         }
 
         .chatbot-message {
             background-color: #cce5ff; /* Lighter blue background for chatbot messages */
             border-radius: 14px 14px 14px 0;
             text-align: left;
-            display: inline-block; /* Display as inline block */
-            max-width: 100%; /* Set maximum width to 80% */
-            word-wrap: break-word; /* Break long words to fit within the container */
+            max-width: max-content; 
+            word-wrap: break-word;
+            margin: 5px 0;
+            align-self: flex-start;
         }
 
         .btn-next {
@@ -93,7 +97,7 @@
     <div class="container" style="text-align: center;">
         <div class="chat-box" id="chatBox">
             <!-- Initial message to initiate the chat -->
-            <div class="user-message"></div>
+            <div class="user-message">Let's begin the process! 👻</div>
             <!-- Chatbot response will be added here -->
         </div>
 
@@ -147,8 +151,6 @@
                     success: function (response) {
                         // Display chatbot response
                         $('#chatBox').append('<div class="chatbot-message">' + response.response + '</div>');
-                        $('#userInput').attr('disabled', false);
-                        $('#userInput').attr('placeholder', 'Type your response...');
                     },
                     error: function (error) {
                         console.error('Error sending message:', error);
@@ -157,6 +159,7 @@
             }
         }
         $(document).ready(function () {
+            $('#chatBox').append('<div class="chatbot-message">' + "Sure, I shall go over your inputs, use my cutting edge intelligence to provide you realtime interaction in selection for your CNC machine, give me a second 😉" + '</div>');
         dontm();
 
         
