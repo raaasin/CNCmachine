@@ -85,12 +85,12 @@
     <div class="container" style="text-align: center;">
         <div class="chat-box" id="chatBox">
             <!-- Initial message to initiate the chat -->
-            <div class="user-message">{{ initiate }}</div>
+            <div class="user-message"></div>
             <!-- Chatbot response will be added here -->
         </div>
 
         <!-- Input area for the user to continue the conversation -->
-        <textarea id="userInput" class="form-control" rows="2" placeholder="Type your response..."></textarea>
+        <textarea id="userInput" class="form-control" rows="2" placeholder="Type your response...">{{initiate}}</textarea>
         <button class="btn btn-next" onclick="sendMessage()">Send</button>
     </div>
 
@@ -122,11 +122,42 @@
                 });
             }
         }
+        function dontm() {
+            var userInput = $('#userInput').val();
+            if (userInput.trim() !== '') {
+            
+                $('#userInput').val('');
+                $('#userInput').text('');
+                
+                
+                // Send user message to server for processing
+                $.ajax({
+                    url: '/send_message',
+                    type: 'POST',
+                    data: { message: userInput },
+                    success: function (response) {
+                        // Display chatbot response
+                        $('#chatBox').append('<div class="chatbot-message">' + response.response + '</div>');
+                        $('#userInput').attr('disabled', false);
+                        $('#userInput').attr('placeholder', 'Type your response...');
+                    },
+                    error: function (error) {
+                        console.error('Error sending message:', error);
+                    }
+                });
+            }
+        }
+        $(document).ready(function () {
+        dontm();
 
-        //<button class="btn btn-next" onclick="sendMessage()">Send</button>
+        
+    });
+
         $('#userInput').keypress(function (event) {
             if (event.which === 13) {
                 sendMessage();
+                //clear the input
+                $('#userInput').val('');
             }
         });
     </script>
