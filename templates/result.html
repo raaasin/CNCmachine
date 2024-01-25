@@ -13,6 +13,8 @@
         body {
             padding: 20px;
             background-color: #f8f9fa; /* Light background color */
+            /*remove scroll*/
+            overflow: hidden;
         }
 
         .container {
@@ -21,21 +23,23 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
             padding: 20px;
             margin-top: 20px;
-            max-width: 400px; /* Set maximum width */
+            width: 97vw; /* Set maximum width */
             margin: auto; /* Center the container */
+            height: 98vh;
+
         }
 
         .chat-box {
-            max-height: 300px;
-            overflow-y: auto;
+            height: 68%;
+            width: 100%;
             padding: 10px;
             background-color: #f0f0f0;
             border-radius: 8px;
             margin-bottom: 20px;
-            display: flex;
             flex-direction: column;
+            overflow-y: auto;
             scroll-behavior: smooth;
-
+            
         }
 
         .user-message, .chatbot-message {
@@ -76,8 +80,12 @@
 
         #userInput {
             margin-top: 10px;
+            max-width: 100%;
+            max-height: 100%;
         }
-
+        button{
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +100,7 @@
         <!-- Input area for the user to continue the conversation -->
         <textarea id="userInput" class="form-control" rows="2" placeholder="Type your response...">{{initiate}}</textarea>
         <button class="btn btn-next" onclick="sendMessage()">Send</button>
+        <button type="button" class="btn btn-next" onclick="window.location.href = '/'">New</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
