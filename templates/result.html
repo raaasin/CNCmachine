@@ -25,14 +25,42 @@
             margin: auto; /* Center the container */
         }
 
-        
-        button{
-            margin: 10px;
-            text-align: right;
-            padding: 200px;
-            width: 40%;
+        .chat-box {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+
         }
-        
+
+        .user-message, .chatbot-message {
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .user-message {
+            background-color: #d1ecf1; /* Light blue background for user messages */
+            border-radius: 14px 14px 0 14px;
+            text-align: right;
+            display: inline-block; /* Display as inline block */
+            max-width: 100%; /* Set maximum width to 80% */
+            word-wrap: break-word; /* Break long words to fit within the container */
+        }
+
+        .chatbot-message {
+            background-color: #cce5ff; /* Lighter blue background for chatbot messages */
+            border-radius: 14px 14px 14px 0;
+            text-align: left;
+            display: inline-block; /* Display as inline block */
+            max-width: 100%; /* Set maximum width to 80% */
+            word-wrap: break-word; /* Break long words to fit within the container */
+        }
+
         .btn-next {
             background-color: #000000; /* Light grayish color for Next button */
             border-color: #000000; /* Match the button border color */
@@ -46,29 +74,61 @@
             color: #212122;
         }
 
+        #userInput {
+            margin-top: 10px;
+        }
 
     </style>
 </head>
 <body>
 
     <div class="container" style="text-align: center;">
-        <h1>Recommendation</h1>
+        <div class="chat-box" id="chatBox">
+            <!-- Initial message to initiate the chat -->
+            <div class="user-message">{{ initiate }}</div>
+            <!-- Chatbot response will be added here -->
+        </div>
+
+        <!-- Input area for the user to continue the conversation -->
+        <textarea id="userInput" class="form-control" rows="2" placeholder="Type your response..."></textarea>
+        <button class="btn btn-next" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
         
-        <p>Based on your input, here's a potential recommendation: 👀</p>
-        {% for chunk in answer %}
-            <p class="lead" style="font-weight: bold;">{{ chunk.text }}</p>
-        {% endfor %}
+        function sendMessage() {
+            var userInput = $('#userInput').val();
+            if (userInput.trim() !== '') {
+                // Display user message
+                $('#chatBox').append('<div class="user-message">' + userInput + '</div>');
+                
+                // Send user message to server for processing
+                $.ajax({
+                    url: '/send_message',
+                    type: 'POST',
+                    data: { message: userInput },
+                    success: function (response) {
+                        // Display chatbot response
+                        $('#chatBox').append('<div class="chatbot-message">' + response.response + '</div>');
+                        // Clear user input
+                        $('#userInput').val('');
+                    },
+                    error: function (error) {
+                        console.error('Error sending message:', error);
+                    }
+                });
+            }
+        }
 
-        <p><strong>Description: 🧾</strong></p>
-            <p class="lead" style="font-size: 14px; font-weight: 700;">{{ about }}</p>
-                <button type="button" id="rethink" class="btn btn-next" onclick="location.reload()">Rethink</button>
-                <button type="button" class="btn btn-next" onclick="window.location.href = '/'">New</button>
-                <hr>
-            </div>
-
-
-            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
-            </script>
-        </body>
-        </html>
+        //<button class="btn btn-next" onclick="sendMessage()">Send</button>
+        $('#userInput').keypress(function (event) {
+            if (event.which === 13) {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
