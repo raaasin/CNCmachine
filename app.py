@@ -28,7 +28,6 @@ def index():
 @app.route('/send_message', methods=['POST'])
 def send_message():
     user_message = request.form['message']
-    #print("recieved",user_message)
     chat_response = get_message(user_message)  
     return jsonify({'response': chat_response})
 
