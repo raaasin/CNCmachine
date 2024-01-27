@@ -1,0 +1,60 @@
+<html>
+<body>
+
+<script type="importmap">
+  {
+    "imports": {
+      "@google/generative-ai": "https://esm.run/@google/generative-ai"
+    }
+  }
+</script>
+<script type="module">
+
+const API_KEY = "AIzaSyDWflxCyU3_pSzXjW-k91I9G6mvzUQ2q2U";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(API_KEY);
+
+async function run() {
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+  const chat = model.startChat({
+    history: [
+      { role: "user", parts: "Hi there, you only answer questions regarding to CNC machine right?" },
+      { role: "model", parts: "Yes that is true, I'm a CNC Machine Expert, sure I'll help you out!" },
+    ],
+    generationConfig: {
+      maxOutputTokens: 1000,
+    },
+  });
+
+  async function sendMessage(msg) {
+    const result = await chat.sendMessageStream(msg);
+    const newParagraph = document.createElement("p");
+    document.body.appendChild(newParagraph);
+
+    let formattedText = "";
+    for await (const chunk of result.stream) {
+      const chunkText = chunk.text();
+      newParagraph.textContent += chunkText;
+      formattedText += chunkText;
+    }
+    formattedText = formatText(formattedText);
+    newParagraph.innerHTML  = formattedText;
+  }
+
+  function formatText(text) {
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"); 
+    text = text.replace(/\*(.*?)\*/g, "<em>$1</em>"); 
+    text = text.replace(/\n/g, "<br>"); 
+    return text;
+  }
+
+  sendMessage("Write a long story about your pretty mom");
+}
+
+run();
+</script>
+
+</body>
+</html>

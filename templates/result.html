@@ -110,68 +110,90 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script>
-        
-        function sendMessage() {
+<script type="importmap">
+  {
+    "imports": {
+      "@google/generative-ai": "https://esm.run/@google/generative-ai"
+    }
+  }
+</script>
+<script type="module">
+
+const API_KEY = "AIzaSyDWflxCyU3_pSzXjW-k91I9G6mvzUQ2q2U";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(API_KEY);
+
+async function run() {
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+  const chat = model.startChat({
+    history: [
+      { role: "user", parts: "Hi there, you only answer questions regarding to CNC machine right?" },
+      { role: "model", parts: "Yes that is true, I'm a CNC Machine Expert, sure I'll help you out!" },
+    ],
+    generationConfig: {
+      maxOutputTokens: 1000,
+    },
+  });
+
+  async function doMessage(msg) {
+    const result = await chat.sendMessageStream(msg);
+    const newParagraph = document.createElement("div");
+    newParagraph.className = "chatbot-message";
+    document.getElementById("chatBox").appendChild(newParagraph);
+
+
+    let formattedText = "";
+    for await (const chunk of result.stream) {
+      const chunkText = chunk.text();
+      newParagraph.textContent += chunkText;
+      formattedText += chunkText;
+    }
+    formattedText = formatText(formattedText);
+    newParagraph.innerHTML  = formattedText;
+  }
+
+  function formatText(text) {
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"); 
+    text = text.replace(/\*(.*?)\*/g, "<em>$1</em>"); 
+    text = text.replace(/\n/g, "<br>"); 
+    return text;
+  }
+  function sendMessage() {
             var userInput = $('#userInput').val();
             if (userInput.trim() !== '') {
                 // Display user message
                 $('#chatBox').append('<div class="user-message">' + userInput + '</div>');
-                
-                // Send user message to server for processing
-                $.ajax({
-                    url: '/send_message',
-                    type: 'POST',
-                    data: { message: userInput },
-                    success: function (response) {
-                        // Display chatbot response
-                        $('#chatBox').append('<div class="chatbot-message">' + response.response + '</div>');
-                        // Clear user input
-                        $('#userInput').val('');
-                    },
-                    error: function (error) {
-                        console.error('Error sending message:', error);
-                    }
-                });
+                $('#userInput').val('');
+                doMessage(userInput);
             }
         }
+
         function dontm() {
             var userInput = $('#userInput').val();
             if (userInput.trim() !== '') {
             
                 $('#userInput').val('');
                 $('#userInput').text('');
-                
-                
-                // Send user message to server for processing
-                $.ajax({
-                    url: '/send_message',
-                    type: 'POST',
-                    data: { message: userInput },
-                    success: function (response) {
-                        // Display chatbot response
-                        $('#chatBox').append('<div class="chatbot-message">' + response.response + '</div>');
-                    },
-                    error: function (error) {
-                        console.error('Error sending message:', error);
-                    }
-                });
+                doMessage(userInput);
             }
         }
+
         $(document).ready(function () {
             $('#chatBox').append('<div class="chatbot-message">' + "Sure, I shall go over your inputs, use my cutting edge intelligence to provide you realtime interaction in selection for your CNC machine, give me a second 😉" + '</div>');
-        dontm();
-
-        
-    });
+        dontm();});
 
         $('#userInput').keypress(function (event) {
             if (event.which === 13) {
                 sendMessage();
-                //clear the input
+
                 $('#userInput').val('');
             }
         });
-    </script>
+}
+
+run();
+</script>
 </body>
 </html>
