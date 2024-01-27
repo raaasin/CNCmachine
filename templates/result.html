@@ -174,20 +174,40 @@ async function run() {
     newParagraph.className = "chatbot-message";
     document.getElementById("chatBox").appendChild(newParagraph);
 
-
     let formattedText = "";
-    for await (const chunk of result.stream) {
-      const chunkText = chunk.text();
-      newParagraph.textContent += chunkText;
-      formattedText += chunkText;
+
+    // Function to display text with a delay
+    async function displayTextWithDelay(text) {
+        const words = text.split(/\s+/).filter(word => word.trim() !== '');
+        const delayBetweenWords = 1000 / 10; // 5 words per second
+
+        for (const word of words) {
+            newParagraph.textContent += word + ' '; // Add the word to the paragraph
+
+            // Wait for the delay before displaying the next word
+            await new Promise(resolve => setTimeout(resolve, delayBetweenWords));
+        }
     }
+
+    // Iterate over each chunk of text and display with delay
+    for await (const chunk of result.stream) {
+        const chunkText = chunk.text();
+        await displayTextWithDelay(chunkText);
+        formattedText += chunkText;
+    }
+
     formattedText = formatText(formattedText);
-    newParagraph.innerHTML  = formattedText;
-    var chatContainer = $('#chatBox');
+    newParagraph.innerHTML = formattedText;
+
+    // Add a horizontal line after each message
     const newhr = document.createElement("hr");
     document.getElementById("chatBox").appendChild(newhr);
+
+    // Scroll to the bottom of the chat box
+    var chatContainer = $('#chatBox');
     chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
-  }
+}
+
 
   function formatText(text) {
     text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"); 
