@@ -1,19 +1,6 @@
 from flask import Flask, render_template, request
-import google.generativeai as genai
-from flask import jsonify
 app = Flask(__name__)
 
-genai.configure(api_key="AIzaSyATRe50SdrmSiOguPzxQ3-AAZRsfmNTKkI")
-model = genai.GenerativeModel('gemini-pro')
-chat = model.start_chat(history=[])
-
-
-def get_message(message):
-    response = chat.send_message(message)
-    response.resolve()
-    print(response.text)
-    return response.text
-flag = 0
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -24,13 +11,6 @@ def index():
         return render_template('result.html', initiate=message)
 
     return render_template('index.html')
-
-@app.route('/send_message', methods=['POST'])
-def send_message():
-    user_message = request.form['message']
-    chat_response = get_message(user_message)  
-    return jsonify({'response': chat_response})
-
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000)
 
