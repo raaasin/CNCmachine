@@ -64,13 +64,13 @@
 <body>
 
     <div class="container" style="text-align: center;">
-        <h1>CNC Selection Guide</h1>
+        <h1>CNC AI Assist</h1>
 
         <form method="post" action="{{ url_for('index') }}">
             <div class="form-group" id="page1" {% if cnc_name %}style="display: none;"{% endif %}>
-                <label for="cnc_name">Hi!👋 I'm OtomatCNC - your personal industrial Tools Co - pilot 🧑‍✈️ <br><br>
-                    I'm here to help you chose the best tools for your tailored needs. ⚒️ <br><br>
-                    Let's start! do you know specific name of the CNC's where you plan to use the tool?
+                <label for="cnc_name">Hi!👋 I'm otomat Digital twin, your AI Assist 🧑‍✈️ <br><br>
+                    Looking for the best tools, for your daily needs. ⚒️ <br><br>
+                    Please provide CNC name and the usage of the tool
                     Write them here (if any)👇
                      </label>
                 <input type="text" class="form-control" name="cnc_name" value="{{ cnc_name }}" required data-next-page="page2">
@@ -78,9 +78,9 @@
             </div>
 
             <div class="form-group" id="page2" {% if not cnc_name %}style="display: none;"{% endif %}>
-                <label for="material">Great! Lets move forward 🚀<br><br>
-                    For which type of operation you plan to use tool for?⚙️<br><br>
-                    Milling, Drilling ...  You know better 😉
+                <label for="material">Excellent! 🚀<br><br>
+                    Please provide the tool for operation type ⚙️<br><br>
+                    For example MIlling,Drilling, etc 😉
                 
                 </label>
                 <input type="text" class="form-control" name="material" value="{{ material }}" required data-next-page="page3">
@@ -88,10 +88,9 @@
             </div>
 
             <div class="form-group" id="page3" {% if not operation %}style="display: none;"{% endif %}>
-                <label for="additional_criteria">You are doing great!🎖️<br><br>
-                    The last question and we are done (I'm almost promise) <br><br>
-                    Could you specify any additional criteria that is important for you: 
-                    budget, timeline ... 🧑‍🔬
+                <label for="additional_criteria">Great!🎖️<br><br>
+                    final question,<br><br>
+                    any addition criteria that you can provide example? budget, resources, so on ... 🧑‍🔬
                 </label>
                 <input type="text" class="form-control" name="additional_criteria" value="{{ additional_criteria }}">
                 <button type="submit" class="btn btn-custom">✔</button>
