@@ -95,6 +95,7 @@
             word-wrap: break-word;
             margin: 5px 0;
             align-self: flex-start;
+            color: brown;
         }
 
         .btn-next {
@@ -133,8 +134,7 @@
 
         <!-- Input area for the user to continue the conversation -->
         <textarea id="userInput" class="form-control" rows="2" placeholder="Type your response...">{{initiate}}</textarea>
-        <button class="btn btn-next" onclick="sendMessage()">Send</button>
-        <button type="button" class="btn btn-next" onclick="window.location.href = '/'">New</button>
+        <button type="button"  class="btn btn-next" onclick="sendMessage()">Send</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
