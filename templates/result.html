@@ -179,7 +179,7 @@ async function run() {
         const delayBetweenWords = 1000 / 10; // 5 words per second
 
         for (const word of words) {
-            newParagraph.textContent += word + ' '; // Add the word to the paragraph
+            newParagraph.textContent += word + ' '; // Add the word 
 
             // Wait for the delay before displaying the next word
             await new Promise(resolve => setTimeout(resolve, delayBetweenWords));
