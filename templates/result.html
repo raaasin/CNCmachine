@@ -186,7 +186,6 @@ async function run() {
         }
     }
 
-    // Iterate over each chunk of text and display with delay
     for await (const chunk of result.stream) {
         const chunkText = chunk.text();
         await displayTextWithDelay(chunkText);
